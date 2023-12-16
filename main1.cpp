@@ -1,57 +1,27 @@
-﻿#include <string>
-#include <iostream>
-#include <fstream>
-#include <vector>
+﻿#include "Menu.h"
 
-using namespace std;
-
-struct Menu {
-	string name;
-	double price;
-	string time;
-};
+// Функция для вывода информации о всех Меню
+void displayMenuInfo(const vector<Menu>& menuObjects)
+{
+	for (const auto& menu : menuObjects)
+	{
+		printMenuInfo(menu);
+	}
+}
 
 int main() {
-	vector <Menu> all;
-	ifstream in;
 
-	in.open("input.txt");
+	setlocale(LC_ALL, "Russian");
 
-	if (!in.is_open()) {
-		cout << "Opening file error" << endl;
-		return 0;
-	}
+	// Имя файла с данными
+	string filename = "input.txt";
 
-	int i = 0;
+	// Создание объектов Menu из файла
+	vector<Menu> menuObjects = createObjectsFromFile(filename);
 
-	Menu Node;
-	while (!in.eof()) {
-		string str;
-		in >> str;
-
-		if (i == 0) {
-			Node.name = str;
-		}
-		if (i == 1) {
-			Node.price = stod(str);
-		}
-		if (i == 2) {
-			Node.time = str;
-			i = -1;
-
-			all.push_back(Node);
-		}
-		i++;
-
-	}
-
-	for (int i = 0; i < all.size(); i++)
-	{
-		cout << all[i].name << " " << all[i].price << " " << all[i].time << endl;
-	}
-
-
-
+	// Вывод информации о всех меню
+	displayMenuInfo(menuObjects);
 
 	return 0;
+
 }
