@@ -21,9 +21,15 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,20 +2,21 @@
 
 #include <string>
 #include <iostream>
-#include <fstream>
 #include <vector>
+#include "Time.h"
 
-using namespace std;
+class Menu {
+public:
+    std::string name;
+    double price;
+    Time time;
 
-// Структура Menu для представления данных о меню
-struct Menu {
-	string name;
-	double price;
-	string time;
+    // Метод для считывания меню из строки
+    void read(const std::string& menuString);
+
+    // Метод для записи меню в поток
+    void write(std::ostream& out) const;
 };
 
-// Объявление функции для создания объектов Menu из файла
-vector<Menu> createObjectsFromFile(const string& filename);
-
-// Объявление функции для вывода информации о меню
-void printMenuInfo(const Menu& menu);
+// Функция для создания объектов Menu из файла
+std::vector<Menu> createObjectsFromFile(const std::string& filename);

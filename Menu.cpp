@@ -1,56 +1,41 @@
 #include "Menu.h"
+#include <fstream>
+#include <sstream>
 
-vector<Menu> createObjectsFromFile(const string& filename) {
-	vector <Menu> all;
-	ifstream in(filename);
-
-	if (!in.is_open()) {
-		cout << "Opening file error" << endl;
-		return all;
-	}
-
-	int i = 0;
-
-	Menu Node;
-	while (!in.eof()) {
-		string str;
-
-		// Считываем данные через пробел в строку str
-		in >> str;
-
-		// i == 0 - имя 
-		if (i == 0) {
-			Node.name = str;
-		}
-
-		// i == 1 - цена
-		if (i == 1) {
-			Node.price = stod(str);
-		}
-
-		// i == 2 - время
-		if (i == 2) {
-			Node.time = str;
-
-			// Обнуляем цикл
-			i = -1;
-
-			// Добавляем узел в вектор всех Меню
-			all.push_back(Node);
-		}
-		i++;
-
-	}
-
-	in.close();
-
-	return all;
+void Menu::read(const std::string& menuString) {
+    std::istringstream iss(menuString);
+    char colon;
+    iss >> name >> price;
+    std::string remainingString;
+    getline(iss >> std::ws, remainingString); // считываем остаток строки, включая пробелы
+    time.read(remainingString);
 }
 
-// Функция вывода информации об одном меню
-void printMenuInfo(const Menu& menu) {
-	cout << "Название: " << menu.name << endl; 
-	cout << "Цена: " << menu.price << endl;
-	cout << "Время приготовления: " << menu.time << endl;
-	cout << endl;
+void Menu::write(std::ostream& out) const {
+    out << "Название: " << name << std::endl;
+    out << "Цена: " << price << std::endl;
+    out << "Время приготовления: ";
+    time.write(out);
+    out << std::endl << std::endl;
+}
+
+std::vector<Menu> createObjectsFromFile(const std::string& filename) {
+    std::vector<Menu> all;
+    std::ifstream in(filename);
+
+    if (!in.is_open()) {
+        std::cout << "Opening file error" << std::endl;
+        return all;
+    }
+
+    std::string line;
+    while (std::getline(in, line)) {
+        Menu menu;
+        menu.read(line);
+        all.push_back(menu);
+    }
+
+    in.close();
+
+    return all;
 }
