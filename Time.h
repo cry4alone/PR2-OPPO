@@ -9,9 +9,10 @@ public:
     int hours;
     int minutes;
 
-    // Метод для считывания времени из строки
-    void read(const std::string& timeString);
-
     // Метод для записи времени в поток
     void write(std::ostream& out) const;
+
+    void setTime(std::istream& iss);
+
+    void checkTime();
 };
